@@ -3,9 +3,6 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 @Component({
     selector: 'app-ui-hover',
     styles: [`
-        .card {
-
-        }
 		.morph {
 			background: rgba( 210, 204, 204, 0.2 );
             box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
@@ -31,7 +28,7 @@ export class AppUiHoverCardComponent implements OnInit {
 
     @Input() height: number = 400;
     @Input() width: number = 200;
-    @Input() zoom: number = 1.2;
+    @Input() zoom: number = 1.25;
 
     @ViewChild('hoverCard') hoverCard: ElementRef | undefined;
 
@@ -42,19 +39,12 @@ export class AppUiHoverCardComponent implements OnInit {
     ngOnInit(): void {
         if(this.morphism) {
             this.morphismClass = "morph";
-        }
-
-        // const card = (Element)document.querySelector(".card");
-        // this.card = card;
-        // card?.addEventListener("mousemove", this.cardHover);  
-    }
-
-    cardHover(event: Event) {
+        }  
     }
     
     onMouseMove(event: MouseEvent) {
         
-        const degrees = 30;  
+        const degrees = 25;  
         const card = this.hoverCard?.nativeElement;
 
         
@@ -77,7 +67,7 @@ export class AppUiHoverCardComponent implements OnInit {
 
     onMouseLeave() {
         const card = this.hoverCard?.nativeElement;
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(${this.zoom}, ${this.zoom}, ${this.zoom} )`;
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)`;
     }
 
     onClick() {
