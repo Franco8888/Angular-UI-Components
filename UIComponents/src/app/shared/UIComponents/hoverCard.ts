@@ -12,7 +12,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 		
 	`],
     template: `
-			<div #hoverCard [class]="morphismClass" [style.borderRadius.px]="radius" [style.height.px]="height" [style.width.px]="width" (mousemove)="onMouseMove($event)" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" (click)="onClick()">
+			<div #hoverCard [class]="morphismClass" [style.borderRadius.px]="radius" [style.height.px]="height" [style.width.px]="width" style="position: relative" (mousemove)="onMouseMove($event)" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" (click)="onClick()">
 				<ng-content></ng-content>	
 			</div>
 	`
@@ -25,6 +25,7 @@ export class AppUiHoverCardComponent implements OnInit {
     @Input() height: number = 400;
     @Input() width: number = 200;
     @Input() zoom: number = 1.25;
+    @Input() tiltDegrees: number = 25;
 
     @ViewChild('hoverCard') hoverCard: ElementRef | undefined;
 
@@ -39,30 +40,35 @@ export class AppUiHoverCardComponent implements OnInit {
     }
     
     onMouseMove(event: MouseEvent) {
-        
-        const degrees = 25;  
-        const card = this.hoverCard?.nativeElement;
 
+        const card = this.hoverCard?.nativeElement;
         const cardWidth = card.offsetWidth;
         const cardHeight = card.offsetHeight;
         const centerXPos = card.offsetLeft + cardWidth/2;
         const centerYPos = card.offsetTop + cardHeight/2;
-        
-        const mouseX = event.clientX - centerXPos;
-        const mouseY = event.clientY - centerYPos;
 
-        const rotateX = degrees*( mouseY/(cardHeight/2) ) ;  
-        const rotateY = degrees*( mouseX/(cardWidth/2) ) ;  
+        // event.clientY gives distance from mouse cursor to top of viewport (changes with scrolling so have to account for scrolling)
+        const topDistance = window.pageYOffset + event.clientY
+        const leftDistance = window.pageXOffset + event.clientX
+
+        const mouseX = leftDistance - centerXPos;   //gives distance from centre to cursor
+        const mouseY = topDistance - centerYPos;
+
+        const rotateX = this.tiltDegrees*( mouseY/(cardHeight/2) ) ;  
+        const rotateY = this.tiltDegrees*( mouseX/(cardWidth/2) ) ;  
 
         card.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale3d(${this.zoom}, ${this.zoom}, ${this.zoom} )`; 
     }
 
     onMouseEnter() {
+        const card = this.hoverCard?.nativeElement;
+        card.style.zIndex = '10';
         this.setTransition();
     }
 
     onMouseLeave() {
         const card = this.hoverCard?.nativeElement;
+        card.style.zIndex = '1';
         card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)`;
         this.setTransition();
     }
