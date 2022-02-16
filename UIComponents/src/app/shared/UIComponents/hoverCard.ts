@@ -42,17 +42,23 @@ export class AppUiHoverCardComponent implements OnInit {
     onMouseMove(event: MouseEvent) {
 
         const card = this.hoverCard?.nativeElement;
+        const cardBound = card.getBoundingClientRect();
+
         const cardWidth = card.offsetWidth;
         const cardHeight = card.offsetHeight;
-        const centerXPos = card.offsetLeft + cardWidth/2;
-        const centerYPos = card.offsetTop + cardHeight/2;
+        const centerXPos = cardBound.left + cardWidth/2;   
+        const centerYPos = cardBound.top + cardHeight/2;    
 
-        // event.clientY gives distance from mouse cursor to top of viewport (changes with scrolling so have to account for scrolling)
-        const topDistance = window.pageYOffset + event.clientY
-        const leftDistance = window.pageXOffset + event.clientX
+        const mouseX = event.clientX - centerXPos;   //gives distance from centre to cursor
+        let mouseY = event.clientY - centerYPos;
 
-        const mouseX = leftDistance - centerXPos;   //gives distance from centre to cursor
-        const mouseY = topDistance - centerYPos;
+        // Stop it from tilting too much by forcing the distance from center to be not mote than 2x card's height
+        if(mouseY > (cardHeight/2)) {
+            mouseY = cardHeight/2;  //stop it from tilting too much
+        }
+        if(mouseY < (-cardHeight/2)) {
+            mouseY = -cardHeight/2;  //stop it from tilting too much
+        }
 
         const rotateX = this.tiltDegrees*( mouseY/(cardHeight/2) ) ;  
         const rotateY = this.tiltDegrees*( mouseX/(cardWidth/2) ) ;  
