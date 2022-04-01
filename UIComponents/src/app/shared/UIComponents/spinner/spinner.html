@@ -1,0 +1,56 @@
+<!-- <ng-container *ngIf="type === 'circle'">
+    <div [style.width.px]="size" [style.height.px]="size" class="lds-ring">
+        <div [style.borderColor]="color"></div>
+        <div [style.borderColor]="color"></div>
+        <div [style.borderColor]="color"></div>
+        <div [style.borderColor]="color"></div>
+    </div>
+</ng-container> -->
+<ng-container *ngIf="type === 'squareFlip'">
+    <div [style.width.px]="size" [style.height.px]="size" [style.backgroundColor]="color" class="square-flip-spinner">
+    </div>
+</ng-container>
+
+<ng-container *ngIf="type === 'dotCircle'">
+    <div [style.width.px]="size" [style.height.px]="size" class="sk-chase">
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="type === 'wave'">
+    <div [style.width.px]="waveWidth" [style.height.px]="size" class="wave-spinner">
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect1"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect2"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect3"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect4"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect5"></div>
+    </div>
+</ng-container>
+<ng-container *ngIf="type === 'cubeGrid'">
+    <div [style.width.px]="size" [style.height.px]="size" class="sk-cube-grid">
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube1"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube2"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube3"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube4"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube5"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube6"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube7"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube8"></div>
+        <div [style.backgroundColor]="color" class="sk-cube sk-cube9"></div>
+    </div>
+</ng-container>
+
+<!-- <ng-container *ngIf="type === 'circle'">
+
+</ng-container>
+<ng-container *ngIf="type === 'dot'">
+
+</ng-container>
+<ng-container *ngIf="type === 'foldingCube'">
+
+</ng-container> -->

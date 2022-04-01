@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { AppUiHoverCardComponent } from './shared/UIComponents/hoverCard';
 import { AppUiIconComponent } from './shared/UIComponents/icon';
 import { AppUiIconButtonComponent } from './shared/UIComponents/iconButton';
+import { AppUiSpinnerComponent } from './shared/UIComponents/spinner/spinner';
 import { AppUiTextButtonComponent } from './shared/UIComponents/textButton';
 import { AppUiTextIconButtonComponent } from './shared/UIComponents/textIconButton';
 
@@ -15,7 +16,8 @@ import { AppUiTextIconButtonComponent } from './shared/UIComponents/textIconButt
     AppUiIconButtonComponent,
     AppUiTextIconButtonComponent,
     AppUiIconComponent,
-    AppUiHoverCardComponent
+    AppUiHoverCardComponent,
+    AppUiSpinnerComponent
   ],
   imports: [
     BrowserModule
