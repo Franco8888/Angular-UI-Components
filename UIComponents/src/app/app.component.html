@@ -32,24 +32,29 @@
 </div>
 
 <h2>Spinners</h2>
-<!-- <div style="height: 200px; background-color: blue;">
-  <app-ui-spinner [type]="spinCircle"></app-ui-spinner>
-</div> -->
-<div style="height: 100px; background-color: pink;">
-  <app-ui-spinner [type]="spinSquareFlip"></app-ui-spinner>
+<div style="height: 100px;">
+  <app-ui-spinner [type]="spinCircle" color="#3cd2f0" ></app-ui-spinner>
 </div>
-<div style="height: 100px; background-color: orange;">
-  <app-ui-spinner [type]="spindotCircle"></app-ui-spinner>
+<div style="height: 100px;">
+  <app-ui-spinner [type]="spinSquareFlip" color="#3cd2f0"></app-ui-spinner>
 </div>
-<div style="height: 100px; background-color: grey;">
-  <app-ui-spinner [type]="spinWave"></app-ui-spinner>
+<div style="height: 100px;">
+  <!-- this spinenr cannot bind to a color, you have to set it in the CSS -->
+  <app-ui-spinner [type]="spindotCircle" color="#3cd2f0"></app-ui-spinner>
 </div>
-<div style="height: 200px; background-color: orange;">
-  <app-ui-spinner [type]="spinCubeGrid"></app-ui-spinner>
+<div style="height: 100px;">
+  <app-ui-spinner [type]="spinWave" color="#3cd2f0"></app-ui-spinner>
 </div>
-<!-- <div style="height: 200px; background-color: yellow;">
-  <app-ui-spinner [type]="spinDot"></app-ui-spinner>
-</div> -->
+<div style="height: 100px;">
+  <app-ui-spinner [type]="spinCubeGrid" color="#3cd2f0"></app-ui-spinner>
+</div>
+<div style="height: 100px;">
+  <app-ui-spinner [type]="spinDot" color="#3cd2f0"></app-ui-spinner>
+</div>
+<div style="height: 100px;">
+  <!-- this spinner cannot bind to a color, you have to set it in the CSS -->
+  <app-ui-spinner [type]="spinfoldingCube" color="#3cd2f0"></app-ui-spinner>
+</div>
 
 
 

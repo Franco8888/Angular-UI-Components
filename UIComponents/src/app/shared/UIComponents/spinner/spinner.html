@@ -1,11 +1,14 @@
-<!-- <ng-container *ngIf="type === 'circle'">
+<!-- NOTE: The dotCircel and folding cube cannot bind to color prop, you need to adjust it in the CSS, because cannot bind to element's before pseudo element -->
+
+<ng-container *ngIf="type === 'circle'">
     <div [style.width.px]="size" [style.height.px]="size" class="lds-ring">
-        <div [style.borderColor]="color"></div>
-        <div [style.borderColor]="color"></div>
-        <div [style.borderColor]="color"></div>
-        <div [style.borderColor]="color"></div>
+        <div [style.width.px]="size" [style.height.px]="size" [style.borderWidth.px]="circleWidth" [style.borderColor]="circleColor"></div>
+        <div [style.width.px]="size" [style.height.px]="size" [style.borderWidth.px]="circleWidth" [style.borderColor]="circleColor"></div>
+        <div [style.width.px]="size" [style.height.px]="size" [style.borderWidth.px]="circleWidth" [style.borderColor]="circleColor"></div>
+        <div [style.width.px]="size" [style.height.px]="size" [style.borderWidth.px]="circleWidth" [style.borderColor]="circleColor"></div>
     </div>
-</ng-container> -->
+</ng-container>
+
 <ng-container *ngIf="type === 'squareFlip'">
     <div [style.width.px]="size" [style.height.px]="size" [style.backgroundColor]="color" class="square-flip-spinner">
     </div>
@@ -24,11 +27,16 @@
 
 <ng-container *ngIf="type === 'wave'">
     <div [style.width.px]="waveWidth" [style.height.px]="size" class="wave-spinner">
-        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect1"></div>
-        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect2"></div>
-        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect3"></div>
-        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect4"></div>
-        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap" class="rect5"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap"
+            class="rect1"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap"
+            class="rect2"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap"
+            class="rect3"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap"
+            class="rect4"></div>
+        <div [style.backgroundColor]="color" [style.width.px]="waveBarWidth" [style.marginRight.px]="waveBarGap"
+            class="rect5"></div>
     </div>
 </ng-container>
 <ng-container *ngIf="type === 'cubeGrid'">
@@ -45,12 +53,17 @@
     </div>
 </ng-container>
 
-<!-- <ng-container *ngIf="type === 'circle'">
-
-</ng-container>
 <ng-container *ngIf="type === 'dot'">
-
+    <div [style.width.px]="size" [style.height.px]="size" class="dots-spinner">
+        <div [style.backgroundColor]="color" class="double-bounce1"></div>
+        <div [style.backgroundColor]="color" class="double-bounce2"></div>
+    </div>
 </ng-container>
 <ng-container *ngIf="type === 'foldingCube'">
-
-</ng-container> -->
+    <div [style.width.px]="size" [style.height.px]="size" class="sk-folding-cube">
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+    </div>
+</ng-container>

@@ -20,8 +20,8 @@ export class AppComponent implements OnInit {
   spinCubeGrid = UISpinnerType.cubeGrid;
   spinDot = UISpinnerType.dot;
   spindotCircle = UISpinnerType.dotCircle;
-  spinfoldingCube = UISpinnerType.foldingCube;
   spinWave = UISpinnerType.wave;
+  spinfoldingCube = UISpinnerType.foldingCube;
 
   constructor(public datepipe: DatePipe) {
   }
