@@ -1,0 +1,21 @@
+<!-- Slideshow container -->
+  <div [style.height.px]="height" [style.width.px]="width" class="slideshow-container">
+
+    <!-- Full-width images with number and caption text -->
+    <div *ngFor="let image of images" class="mySlides fade" style="height: 100%; width:100%">
+      <img style="height: 100%; width:100%" [src]="image">
+    </div>
+
+    <!-- Next and previous buttons -->
+    <ng-container *ngIf="type === 'buttons'">
+      <a *ngIf="canPrevious" class="prev" (click)="onTransition(-1)">&#10094;</a>
+      <a *ngIf="canNext" class="next" (click)="onTransition(1)">&#10095;</a>
+    </ng-container>
+
+    <!-- The dots/circles -->
+    <div *ngIf="type === 'dots'" class="dots-container">
+      <ng-container *ngFor="let i of numberArr">
+        <span class="dot" (click)="onTransitionToSlide(i)"></span>
+      </ng-container>
+    </div>
+  </div>

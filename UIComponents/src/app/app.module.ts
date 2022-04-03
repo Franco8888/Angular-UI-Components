@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { CarouselComponent } from './shared/UIComponents/carousel/carousel.component';
 import { AppUiHoverCardComponent } from './shared/UIComponents/hoverCard';
 import { AppUiIconComponent } from './shared/UIComponents/icon';
 import { AppUiIconButtonComponent } from './shared/UIComponents/iconButton';
@@ -17,7 +18,8 @@ import { AppUiTextIconButtonComponent } from './shared/UIComponents/textIconButt
     AppUiTextIconButtonComponent,
     AppUiIconComponent,
     AppUiHoverCardComponent,
-    AppUiSpinnerComponent
+    AppUiSpinnerComponent,
+    CarouselComponent
   ],
   imports: [
     BrowserModule
