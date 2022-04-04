@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { UISpinnerType } from './shared/UIComponents/spinner/spinner';
 import { CarouselType } from './shared/UIComponents/carousel/carousel.component';
+import { CarouselManager, CarouselManagerConfig } from './shared/UIComponents/carousel/carouselManager';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,9 @@ export class AppComponent implements OnInit {
   carouselImages3: string[] = [];
   carouselType = CarouselType.buttons;
 
+  carouselManager1: CarouselManager;
+  carouselManager2: CarouselManager;
+
   // Spinners
   spinCircle = UISpinnerType.circle;
   spinSquareFlip = UISpinnerType.squareFlip;
@@ -29,17 +33,21 @@ export class AppComponent implements OnInit {
   spinfoldingCube = UISpinnerType.foldingCube;
 
   constructor(public datepipe: DatePipe) {
-  }
-
-  ngOnInit(): void {
     this.carouselImages1.push('https://images.unsplash.com/photo-1640622300473-977435c38c04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80');
     this.carouselImages1.push('https://images.unsplash.com/photo-1648740310988-0d58d5838dd8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
     this.carouselImages1.push('https://images.unsplash.com/photo-1648737967267-f896a3cea436?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+    this.carouselManager1 = new CarouselManager(this.carouselImages1, new CarouselManagerConfig());
     
     this.carouselImages2.push('https://images.unsplash.com/photo-1648907599687-869def29cfee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');
     this.carouselImages2.push('https://images.unsplash.com/photo-1648907833554-8a89e8873822?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=712&q=80');
     this.carouselImages2.push('https://images.unsplash.com/photo-1648471520934-6f225cb72be5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');
     this.carouselImages2.push('https://images.unsplash.com/photo-1648856049225-c21484976429?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');
+    
+    this.carouselManager2 = new CarouselManager(this.carouselImages2, new CarouselManagerConfig());
+  }
+
+  ngOnInit(): void {
+    
 
     this.carouselImages3.push('https://images.unsplash.com/photo-1648823635782-586b9e160c40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
     this.carouselImages3.push('https://images.unsplash.com/photo-1648748005497-f372bfff66a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80');
