@@ -4,7 +4,9 @@ export class CarouselManager {
     images: string[];
     config: CarouselManagerConfig;
 
+    dotButtons: boolean[] = [];
     currentIndex = 0;
+    currentSlide: string;
     total: number;
     numberArr: number[] = [];
     width: number;
@@ -16,7 +18,7 @@ export class CarouselManager {
     constructor(_images: string[], _config: CarouselManagerConfig) {
         this.images = _images;
         this.config = _config;
-
+        this.currentSlide = this.images[this.currentIndex];
         this.total = 0;
         this.width = 600;
 
@@ -26,6 +28,7 @@ export class CarouselManager {
     initialize() {
         this.total = this.images.length;
         this.width = this.config.height * this.config.aspectRatio;
+        this.currentSlide = this.images[this.currentIndex];
 
         for (let i = 0; i < this.total; i++) {
             this.numberArr.push(i);
@@ -42,6 +45,15 @@ export class CarouselManager {
         if (this.total < 2) {
             console.log('Carousel lenght must be more than 2');
         }
+
+        // Initialize dot buttons
+        for (let i = 0; i < this.total; i++) {
+            if(i === 0) {
+                this.dotButtons.push(true);
+            } else {
+                this.dotButtons.push(false);
+            }
+        }
     }
     
     // Next/prev buttons pressed
@@ -53,6 +65,7 @@ export class CarouselManager {
                 return;
             } else {
                 this.currentIndex++;
+                this.currentSlide = this.images[this.currentIndex];
             }
         }
         // subtract 1
@@ -61,6 +74,7 @@ export class CarouselManager {
                 return;
             } else {
                 this.currentIndex--;
+                this.currentSlide = this.images[this.currentIndex];
             }
         }
 
@@ -75,6 +89,7 @@ export class CarouselManager {
             return;
         }
         this.currentIndex = slide;
+        this.currentSlide = this.images[this.currentIndex];
 
         this.showSlides();
     }
@@ -86,21 +101,13 @@ export class CarouselManager {
 
         this.calculateAllowedTransition();
 
-        for (let i = 0; i < slides.length; i++) {
-            const slide = <HTMLElement>slides[i];
-            slide.style.display = "none";
-        }
-        const el = <HTMLElement>slides[this.currentIndex];
-        el.style.display = "block";
-
         // if dots were used
         if (this.config.type === CarouselType.dots) {
-            let dots = document.getElementsByClassName("dot");
 
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
+            for (let i = 0; i < this.dotButtons.length; i++) {
+                this.dotButtons[i] = false;
             }
-            dots[this.currentIndex].className += " active";
+            this.dotButtons[this.currentIndex] = true;;
         }
 
         if (!this.firstEntry) {
@@ -121,32 +128,23 @@ export class CarouselManager {
             }
         }
 
-
-        let slides = document.getElementsByClassName("mySlides");
-
         if (this.currentIndex === this.total - 1) {
             this.currentIndex = 0;
+            this.currentSlide = this.images[this.currentIndex];
         } else {
             this.currentIndex++;
+            this.currentSlide = this.images[this.currentIndex];
         }
 
         this.calculateAllowedTransition();
 
-        for (let i = 0; i < slides.length; i++) {
-            const slide = <HTMLElement>slides[i];
-            slide.style.display = "none";
-        }
-        const el = <HTMLElement>slides[this.currentIndex];
-        el.style.display = "block";
-
         // if dots were used
         if (this.config.type === CarouselType.dots) {
-            let dots = document.getElementsByClassName("dot");
 
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
+            for (let i = 0; i < this.dotButtons.length; i++) {
+                this.dotButtons[i] = false;
             }
-            dots[this.currentIndex].className += " active";
+            this.dotButtons[this.currentIndex] = true;;
         }
 
         this.autoShowSlides();
@@ -193,4 +191,10 @@ export class CarouselManagerConfig {
         this.allowedTotal = _allowedTotal;
         this.transitionTime = _transitionTime;
     }
+}
+
+export class DotButton {
+    constructor(
+        public isActive: boolean,
+     ) {}
 }
