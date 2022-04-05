@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     this.carouselImages2.push('https://images.unsplash.com/photo-1648471520934-6f225cb72be5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');
     this.carouselImages2.push('https://images.unsplash.com/photo-1648856049225-c21484976429?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');
     
-    this.carouselManager2 = new CarouselManager(this.carouselImages2, new CarouselManagerConfig());
+    this.carouselManager2 = new CarouselManager(this.carouselImages2, new CarouselManagerConfig(800, 0.67, CarouselType.buttons));
   }
 
   ngOnInit(): void {

@@ -4,19 +4,26 @@ export class CarouselManager {
     images: string[];
     config: CarouselManagerConfig;
 
+    dotButtons: boolean[] = [];
     currentIndex = 0;
     total: number;
-    numberArr: number[] = [];
     width: number;
     canNext = true;
     canPrevious = false;
     manualTransitionPromted = false;
+    // buttons
+    moveRight = false;
+    moveLeft = false;
+    moveToStart = false;
+
     firstEntry = false; // First time to enter
+
+    moveAmount: number = 0;
+    moveAmountString: string = '';
 
     constructor(_images: string[], _config: CarouselManagerConfig) {
         this.images = _images;
         this.config = _config;
-
         this.total = 0;
         this.width = 600;
 
@@ -27,11 +34,7 @@ export class CarouselManager {
         this.total = this.images.length;
         this.width = this.config.height * this.config.aspectRatio;
 
-        for (let i = 0; i < this.total; i++) {
-            this.numberArr.push(i);
-        }
-
-        // If lenght more than 4 reduce size to 4
+        // If lenght more than allowed total
         if (this.total > this.config.allowedTotal) {
             console.log(`Carousel may only contain ${this.config.allowedTotal} images, thus reducing size`);
             const difference = this.total - this.config.allowedTotal;
@@ -41,6 +44,15 @@ export class CarouselManager {
         }
         if (this.total < 2) {
             console.log('Carousel lenght must be more than 2');
+        }
+
+        // Initialize dot buttons
+        for (let i = 0; i < this.total; i++) {
+            if(i === 0) {
+                this.dotButtons.push(true);
+            } else {
+                this.dotButtons.push(false);
+            }
         }
     }
     
@@ -53,6 +65,7 @@ export class CarouselManager {
                 return;
             } else {
                 this.currentIndex++;
+                this.moveRight = true;
             }
         }
         // subtract 1
@@ -61,6 +74,7 @@ export class CarouselManager {
                 return;
             } else {
                 this.currentIndex--;
+                this.moveLeft = true;
             }
         }
 
@@ -81,26 +95,19 @@ export class CarouselManager {
 
     // SHow slides using buttons
     async showSlides() {
-
-        let slides = document.getElementsByClassName("mySlides");
-
-        this.calculateAllowedTransition();
-
-        for (let i = 0; i < slides.length; i++) {
-            const slide = <HTMLElement>slides[i];
-            slide.style.display = "none";
+        if (this.config.type === CarouselType.buttons) {
+            this.calculateAllowedTransition();
         }
-        const el = <HTMLElement>slides[this.currentIndex];
-        el.style.display = "block";
+
+        this.moveSlides();
 
         // if dots were used
         if (this.config.type === CarouselType.dots) {
-            let dots = document.getElementsByClassName("dot");
 
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
+            for (let i = 0; i < this.dotButtons.length; i++) {
+                this.dotButtons[i] = false;
             }
-            dots[this.currentIndex].className += " active";
+            this.dotButtons[this.currentIndex] = true;;
         }
 
         if (!this.firstEntry) {
@@ -120,36 +127,55 @@ export class CarouselManager {
                 return;
             }
         }
-
-
-        let slides = document.getElementsByClassName("mySlides");
-
+        
+        // auto increment index
         if (this.currentIndex === this.total - 1) {
             this.currentIndex = 0;
+            this.moveToStart = true;
         } else {
             this.currentIndex++;
+            this.moveRight = true;
         }
-
-        this.calculateAllowedTransition();
-
-        for (let i = 0; i < slides.length; i++) {
-            const slide = <HTMLElement>slides[i];
-            slide.style.display = "none";
+        if (this.config.type === CarouselType.buttons) {
+            this.calculateAllowedTransition();
         }
-        const el = <HTMLElement>slides[this.currentIndex];
-        el.style.display = "block";
+        this.moveSlides();
 
         // if dots were used
         if (this.config.type === CarouselType.dots) {
-            let dots = document.getElementsByClassName("dot");
 
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
+            for (let i = 0; i < this.dotButtons.length; i++) {
+                this.dotButtons[i] = false;
             }
-            dots[this.currentIndex].className += " active";
+            this.dotButtons[this.currentIndex] = true;;
         }
 
         this.autoShowSlides();
+    }
+
+    moveSlides() {
+        if(this.firstEntry) {
+            return;
+        } else {
+            if(this.config.type === CarouselType.buttons) {
+                if(this.moveRight) {
+                    this.moveAmount += -(this.width);
+                } 
+                if(this.moveLeft) {
+                    this.moveAmount += (this.width);
+                } 
+                if(this.moveToStart) {
+                    this.moveAmount = 0;
+                }
+                this.moveRight = false;
+                this.moveLeft = false;
+                this.moveToStart = false;
+            } else if(this.config.type === CarouselType.dots) {
+                this.moveAmount = -(this.currentIndex)*this.width;
+            }
+        }
+       
+        this.moveAmountString = `translateX(${this.moveAmount}px)`;
     }
 
     checkIfManualTransitionPromted(): boolean {
@@ -160,6 +186,7 @@ export class CarouselManager {
         }
     }
 
+    // Calculate Allowed transition for buttons
     calculateAllowedTransition() {
         if (this.currentIndex === 0) {
             this.canPrevious = false;

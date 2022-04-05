@@ -6,16 +6,16 @@ import { CarouselManager } from './carouselManager';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss']
 })
-export class CarouselComponent implements AfterViewInit{
+export class CarouselComponent implements OnInit{
 
   @Input() manager!: CarouselManager;
 
   constructor() {
 
   }
-
-  async ngAfterViewInit() {
+  ngOnInit(): void {
     if (this.manager.total > 0) {
+
       this.manager.firstEntry = true;
       this.manager.showSlides();
       this.manager.autoShowSlides();

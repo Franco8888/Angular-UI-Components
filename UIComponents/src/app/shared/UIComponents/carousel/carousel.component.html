@@ -1,9 +1,10 @@
-<!-- Slideshow container -->
   <div [style.height.px]="manager.config.height" [style.width.px]="manager.width" class="slideshow-container">
 
     <!-- Full-width images with number and caption text -->
-    <div *ngFor="let image of manager.images" class="mySlides fade" style="height: 100%; width:100%">
-      <img style="height: 100%; width:100%" [src]="image">
+    <div class="animation" [style.transform]="manager.moveAmountString" style="height: 100%; display: flex; flex-wrap: nowrap; position: absolute; left: 0px; top:0px;">
+      <div *ngFor="let image of manager.images" [style.width.px]="manager.width" style="height: 100%;">
+          <img style="height: 100%; width:100%" [src]="image">
+      </div>
     </div>
 
     <!-- Next and previous buttons -->
@@ -14,8 +15,8 @@
 
     <!-- The dots/circles -->
     <div *ngIf="manager.config.type === 'dots'" class="dots-container">
-      <ng-container *ngFor="let i of manager.numberArr">
-        <span class="dot" (click)="manager.onTransitionToSlide(i)"></span>
+      <ng-container *ngFor="let button of manager.dotButtons, let i = index">
+        <span class="dot" [ngClass]="button? 'active': ''" (click)="manager.onTransitionToSlide(i)"></span>
       </ng-container>
     </div>
   </div>
