@@ -15,18 +15,12 @@ export class CarouselComponent implements OnInit{
   }
   ngOnInit(): void {
     if (this.manager.total > 0) {
-      console.log('Enter Onint');
-      console.log(`manager.currentSlide: ${this.manager.currentSlide}`);
 
       this.manager.firstEntry = true;
       this.manager.showSlides();
       this.manager.autoShowSlides();
     }
   }
-
-  // async ngAfterViewInit() {
-    
-  // }
 
 }
 

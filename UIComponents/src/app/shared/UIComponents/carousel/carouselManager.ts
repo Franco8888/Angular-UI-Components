@@ -6,19 +6,24 @@ export class CarouselManager {
 
     dotButtons: boolean[] = [];
     currentIndex = 0;
-    currentSlide: string;
     total: number;
-    numberArr: number[] = [];
     width: number;
     canNext = true;
     canPrevious = false;
     manualTransitionPromted = false;
+    // buttons
+    moveRight = false;
+    moveLeft = false;
+    moveToStart = false;
+
     firstEntry = false; // First time to enter
+
+    moveAmount: number = 0;
+    moveAmountString: string = '';
 
     constructor(_images: string[], _config: CarouselManagerConfig) {
         this.images = _images;
         this.config = _config;
-        this.currentSlide = this.images[this.currentIndex];
         this.total = 0;
         this.width = 600;
 
@@ -28,13 +33,8 @@ export class CarouselManager {
     initialize() {
         this.total = this.images.length;
         this.width = this.config.height * this.config.aspectRatio;
-        this.currentSlide = this.images[this.currentIndex];
 
-        for (let i = 0; i < this.total; i++) {
-            this.numberArr.push(i);
-        }
-
-        // If lenght more than 4 reduce size to 4
+        // If lenght more than allowed total
         if (this.total > this.config.allowedTotal) {
             console.log(`Carousel may only contain ${this.config.allowedTotal} images, thus reducing size`);
             const difference = this.total - this.config.allowedTotal;
@@ -65,7 +65,7 @@ export class CarouselManager {
                 return;
             } else {
                 this.currentIndex++;
-                this.currentSlide = this.images[this.currentIndex];
+                this.moveRight = true;
             }
         }
         // subtract 1
@@ -74,7 +74,7 @@ export class CarouselManager {
                 return;
             } else {
                 this.currentIndex--;
-                this.currentSlide = this.images[this.currentIndex];
+                this.moveLeft = true;
             }
         }
 
@@ -89,17 +89,17 @@ export class CarouselManager {
             return;
         }
         this.currentIndex = slide;
-        this.currentSlide = this.images[this.currentIndex];
 
         this.showSlides();
     }
 
     // SHow slides using buttons
     async showSlides() {
+        if (this.config.type === CarouselType.buttons) {
+            this.calculateAllowedTransition();
+        }
 
-        let slides = document.getElementsByClassName("mySlides");
-
-        this.calculateAllowedTransition();
+        this.moveSlides();
 
         // if dots were used
         if (this.config.type === CarouselType.dots) {
@@ -127,16 +127,19 @@ export class CarouselManager {
                 return;
             }
         }
-
+        
+        // auto increment index
         if (this.currentIndex === this.total - 1) {
             this.currentIndex = 0;
-            this.currentSlide = this.images[this.currentIndex];
+            this.moveToStart = true;
         } else {
             this.currentIndex++;
-            this.currentSlide = this.images[this.currentIndex];
+            this.moveRight = true;
         }
-
-        this.calculateAllowedTransition();
+        if (this.config.type === CarouselType.buttons) {
+            this.calculateAllowedTransition();
+        }
+        this.moveSlides();
 
         // if dots were used
         if (this.config.type === CarouselType.dots) {
@@ -150,6 +153,31 @@ export class CarouselManager {
         this.autoShowSlides();
     }
 
+    moveSlides() {
+        if(this.firstEntry) {
+            return;
+        } else {
+            if(this.config.type === CarouselType.buttons) {
+                if(this.moveRight) {
+                    this.moveAmount += -(this.width);
+                } 
+                if(this.moveLeft) {
+                    this.moveAmount += (this.width);
+                } 
+                if(this.moveToStart) {
+                    this.moveAmount = 0;
+                }
+                this.moveRight = false;
+                this.moveLeft = false;
+                this.moveToStart = false;
+            } else if(this.config.type === CarouselType.dots) {
+                this.moveAmount = -(this.currentIndex)*this.width;
+            }
+        }
+       
+        this.moveAmountString = `translateX(${this.moveAmount}px)`;
+    }
+
     checkIfManualTransitionPromted(): boolean {
         if (this.manualTransitionPromted) {
             return true;
@@ -158,6 +186,7 @@ export class CarouselManager {
         }
     }
 
+    // Calculate Allowed transition for buttons
     calculateAllowedTransition() {
         if (this.currentIndex === 0) {
             this.canPrevious = false;
@@ -191,10 +220,4 @@ export class CarouselManagerConfig {
         this.allowedTotal = _allowedTotal;
         this.transitionTime = _transitionTime;
     }
-}
-
-export class DotButton {
-    constructor(
-        public isActive: boolean,
-     ) {}
 }
