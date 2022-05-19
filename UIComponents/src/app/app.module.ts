@@ -9,6 +9,7 @@ import { AppUiIconButtonComponent } from './shared/UIComponents/iconButton';
 import { AppUiSpinnerComponent } from './shared/UIComponents/spinner/spinner';
 import { AppUiTextButtonComponent } from './shared/UIComponents/textButton';
 import { AppUiTextIconButtonComponent } from './shared/UIComponents/textIconButton';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AppUiTextIconButtonComponent } from './shared/UIComponents/textIconButt
     AppUiIconComponent,
     AppUiHoverCardComponent,
     AppUiSpinnerComponent,
-    CarouselComponent
+    CarouselComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule

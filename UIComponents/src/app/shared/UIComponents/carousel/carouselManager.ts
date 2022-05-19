@@ -8,10 +8,10 @@ export class CarouselManager {
     currentIndex = 0;
     total: number;
     width: number;
+    manualTransitionPromted = false;
+    // arrow buttons
     canNext = true;
     canPrevious = false;
-    manualTransitionPromted = false;
-    // buttons
     moveRight = false;
     moveLeft = false;
     moveToStart = false;
